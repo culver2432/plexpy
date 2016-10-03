@@ -98,7 +98,7 @@ class ActivityProcessor(object):
                 # Check if any notification agents have notifications enabled
                 if notify:
                     values.update({'ip_address': session['ip_address']})
-                    plexpy.NOTIFY_QUEUE.put(notification_handler.add_to_notify_queue(
+                    plexpy.NOTIFY_QUEUE.put(notification_handler.add_to_queue(
                         stream_data=values, notify_action='on_play'))
 
                 # If it's our first write then time stamp it.
@@ -115,9 +115,9 @@ class ActivityProcessor(object):
                         self.db.upsert('sessions', ip_address, keys)
 
                 if notify:
-                    plexpy.NOTIFY_QUEUE.put(notification_handler.add_to_notify_queue(
+                    plexpy.NOTIFY_QUEUE.put(notification_handler.add_to_queue(
                         stream_data=values, notify_action='on_concurrent'))
-                    plexpy.NOTIFY_QUEUE.put(notification_handler.add_to_notify_queue(
+                    plexpy.NOTIFY_QUEUE.put(notification_handler.add_to_queue(
                         stream_data=values, notify_action='on_newdevice'))
 
                 return True
